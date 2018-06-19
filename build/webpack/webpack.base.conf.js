@@ -5,11 +5,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const env = process.env.NODE_ENV;
 
+const base_dir = path.join(__dirname, '..', '..', 'client')
+
 const config = {
-  entry: path.join(__dirname, 'src', 'main.js'),
+  entry: path.join(base_dir, 'src', 'index.js'),
   mode: env,
   output: {
+      path: path.join(base_dir, 'dist'),
     publicPath: '/',
+    filename: 'js/[name].js?[hash]'
   },
   optimization: {
     splitChunks: {
@@ -27,7 +31,7 @@ const config = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [path.join(__dirname, 'src')],
+        include: [path.join(base_dir, 'src')],
       },
       {
         test: /\.scss$/,
@@ -44,8 +48,8 @@ const config = {
   plugins: [
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      filename: path.join(__dirname, 'dist', 'index.html'),
-      template: path.join(__dirname, 'static', 'index.html'),
+      filename: path.join(base_dir, 'dist', 'index.html'),
+      template: path.join(base_dir, 'static', 'index.html'),
       inject: true,
     }),
   ],
